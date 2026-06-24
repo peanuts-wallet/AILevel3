@@ -280,6 +280,11 @@
       font-weight: 850;
     }
 
+    .modal .hashtags {
+      color: #276ea9;
+      word-break: keep-all;
+    }
+
     .modal-close {
       width: 100%;
       height: 54px;
@@ -355,11 +360,24 @@
     </section>
   </div>
 
+  <div class="modal-backdrop" id="successModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+      <h2 id="successTitle">정답입니다!</h2>
+      <p>
+        차갑게 얼어 있던 창고가 따뜻한 문화공간으로 '녹았습니다'.<br>
+        이 공간에서 가장 '따뜻하게' 느껴지는 장소를 찾아 사진을 찍고,<br>
+        <span class="hashtags">#동빈문화창고1969 #녹다 #얼음땡</span><br>
+        해시태그와 함께 개인 인스타그램에 올려주세요.
+      </p>
+      <button class="modal-close" id="successClose" type="button">공간으로 이동</button>
+    </section>
+  </div>
+
   <section class="player" id="xrooPlayer" aria-label="XROO 공간">
     <iframe
       width="1920"
       height="1080"
-      src="https://player.xroo.io/space/2b9f6cc007374882ba21f9a951483212/1?startSceneID=639070"
+      src="https://docs.google.com/forms/d/e/1FAIpQLScLBwEiK8TlX5ex3EJz-Ixm37l3h312bx2DeFJwbF54KzBIbA/viewform?usp=publish-editor"
       frameborder="0"
       allow="autoplay; web-share"
       allowfullscreen>
@@ -378,6 +396,8 @@
     const hintBubble = document.querySelector("#hintBubble");
     const hintModal = document.querySelector("#hintModal");
     const hintClose = document.querySelector("#hintClose");
+    const successModal = document.querySelector("#successModal");
+    const successClose = document.querySelector("#successClose");
     let messageTimer;
     let hintBubbleTimer;
     let hasShownHintBubble = false;
@@ -427,10 +447,25 @@
       input.focus();
     }
 
+    function openSuccess() {
+      successModal.classList.add("is-visible");
+      successModal.setAttribute("aria-hidden", "false");
+      successClose.focus();
+    }
+
+    function openPlayer() {
+      successModal.classList.remove("is-visible");
+      successModal.setAttribute("aria-hidden", "true");
+      mission.hidden = true;
+      document.body.classList.add("is-player-open");
+      xrooPlayer.classList.add("is-visible");
+    }
+
     hintButton.addEventListener("click", openHint);
     mascotButton.addEventListener("click", openHint);
     hintBubble.addEventListener("click", openHint);
     hintClose.addEventListener("click", closeHint);
+    successClose.addEventListener("click", openPlayer);
     hintModal.addEventListener("click", (event) => {
       if (event.target === hintModal) {
         closeHint();
@@ -449,12 +484,7 @@
       if (answers.includes(normalize(input.value))) {
         clearTimeout(hintBubbleTimer);
         hintBubble.classList.remove("is-visible");
-        showMessage("정답이에요! 다음 공간으로 넘어갈게요.", "correct");
-        setTimeout(() => {
-          mission.hidden = true;
-          document.body.classList.add("is-player-open");
-          xrooPlayer.classList.add("is-visible");
-        }, 650);
+        openSuccess();
         return;
       }
 
