@@ -369,7 +369,13 @@
         <span class="hashtags">#동빈문화창고1969 #녹다 <br/>#얼음땡</span><br>
         해시태그와 함께 개인 <br/>인스타그램에 올려주세요.
       </p>
-      <button class="modal-close" id="successClose" type="button">사진 올리기</button>
+      <button
+        class="modal-close"
+        id="successClose"
+        type="button"
+        onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScLENFe9a735V6-cf3qCLwx12vB0qhdNUrefgDhe3OztORIHg/viewform', '_blank')">
+        설문지 작성
+      </button>
     </section>
   </div>
 
@@ -377,7 +383,6 @@
     <iframe
       width="1920"
       height="1080"
-      src="https://docs.google.com/forms/d/e/1FAIpQLScLENFe9a735V6-cf3qCLwx12vB0qhdNUrefgDhe3OztORIHg/viewform?usp=sharing&ouid=116296733452273839296"
       frameborder="0"
       allow="autoplay; web-share"
       allowfullscreen>
@@ -386,11 +391,9 @@
 
   <script>
     const answers = ["송빙교"];
-    const mission = document.querySelector("#mission");
     const form = document.querySelector("#answerForm");
     const input = document.querySelector("#answerInput");
     const message = document.querySelector("#message");
-    const xrooPlayer = document.querySelector("#xrooPlayer");
     const hintButton = document.querySelector("#hintButton");
     const mascotButton = document.querySelector("#mascotButton");
     const hintBubble = document.querySelector("#hintBubble");
@@ -453,19 +456,10 @@
       successClose.focus();
     }
 
-    function openPlayer() {
-      successModal.classList.remove("is-visible");
-      successModal.setAttribute("aria-hidden", "true");
-      mission.hidden = true;
-      document.body.classList.add("is-player-open");
-      xrooPlayer.classList.add("is-visible");
-    }
-
     hintButton.addEventListener("click", openHint);
     mascotButton.addEventListener("click", openHint);
     hintBubble.addEventListener("click", openHint);
     hintClose.addEventListener("click", closeHint);
-    successClose.addEventListener("click", openPlayer);
     hintModal.addEventListener("click", (event) => {
       if (event.target === hintModal) {
         closeHint();
